@@ -61,7 +61,7 @@ local uArrow
 local lArrow
 
 local motionx = 0
-local SPEED = 8
+local SPEED = 5.5
 local LINEAR_VELOCITY = -111
 local GRAVITY = 10
 
@@ -75,6 +75,15 @@ local ball2
 local theBall
 
 local questionsAnswered = 0
+
+local popSound = audio.loadSound("Sounds/pop.mp3")
+local popSoundChannel
+
+local boingSound = audio.loadSound("Sounds/boing.mp3")
+local boingSoundChannel
+
+local loseSound = audio.loadSound("Sounds/YouLose.mp3")
+local loseSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -192,6 +201,7 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
+            boingSoundChannel = audio.play(boingSound)
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -223,6 +233,7 @@ local function onCollision( self, event )
                 heart2.isVisible = false
                 heart3.isVisible = false
                 timer.performWithDelay(200, YouLoseTransition)
+                loseSoundChannel = audio.play(loseSound)
             end
         end
 
