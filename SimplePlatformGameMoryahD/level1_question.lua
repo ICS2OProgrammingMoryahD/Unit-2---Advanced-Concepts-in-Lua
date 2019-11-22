@@ -145,7 +145,7 @@ local function DisplayQuestion()
     -- calculate wrong answers
     wrongAnswer1 = answer + math.random(1, 3)
     wrongAnswer2 = answer + math.random(4, 6)
-    wrongAnswer2 = answer + math.random(7, 9)
+    wrongAnswer3 = answer + math.random(7, 9)
 
     --creating the question depending on the selcetion number
     questionText.text = firstNumber .. " + " .. secondNumber .. " ="
@@ -169,11 +169,11 @@ local function PositionAnswers()
         answerText.x = X1
         answerText.y = Y1
         
-        wrongText1.x = X2
-        wrongText1.y = Y1
+        wrongText1.x = X1
+        wrongText1.y = Y2
         
-        wrongText2.x = X1
-        wrongText2.y = Y2
+        wrongText2.x = X2
+        wrongText2.y = Y1
 
         wrongText3.x = X2
         wrongText3.y = Y2
@@ -184,14 +184,14 @@ local function PositionAnswers()
         answerText.x = X1
         answerText.y = Y2
             
-        wrongText1.x = X1
+        wrongText1.x = X2
         wrongText1.y = Y1
             
         wrongText2.x = X2
-        wrongText2.y = Y1
+        wrongText2.y = Y2
 
-        wrongText3.x = X
-        wrongText3.y = Y
+        wrongText3.x = X1
+        wrongText3.y = Y1
 
 
     elseif (answerPosition == 3) then
@@ -199,28 +199,28 @@ local function PositionAnswers()
         answerText.x = X2
         answerText.y = Y1
             
-        wrongText1.x = X1
+        wrongText1.x = X2
         wrongText1.y = Y2
             
         wrongText2.x = X1
         wrongText2.y = Y1
 
-        wrongText3.x = X
-        wrongText3.y = Y
+        wrongText3.x = X1
+        wrongText3.y = Y2
 
     elseif (answerPosition == 4) then
 
-        answerText.x = X
-        answerText.y = Y
+        answerText.x = X2
+        answerText.y = Y2
             
-        wrongText1.x = X
-        wrongText1.y = Y
+        wrongText1.x = X1
+        wrongText1.y = Y1
             
-        wrongText2.x = X
-        wrongText2.y = Y
+        wrongText2.x = X1
+        wrongText2.y = Y2
 
-        wrongText3.x = X
-        wrongText3.y = Y
+        wrongText3.x = X2
+        wrongText3.y = Y1
             
     end
 end
@@ -257,7 +257,7 @@ function scene:create( event )
     wrongText1.anchorX = 0
     wrongText2 = display.newText("", X1, Y1, Arial, 75)
     wrongText2.anchorX = 0
-    wrongText3 = display.newText("", X1, Y1, Arial, 75)
+    wrongText3 = display.newText("", X2, Y1, Arial, 75)
     wrongText3.anchorX = 0
 
     -----------------------------------------------------------------------------------------

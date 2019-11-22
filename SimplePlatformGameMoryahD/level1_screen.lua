@@ -61,9 +61,9 @@ local uArrow
 local lArrow
 
 local motionx = 0
-local SPEED = 5.5
-local LINEAR_VELOCITY = -111
-local GRAVITY = 10
+local SPEED = 6.9
+local LINEAR_VELOCITY = -100
+local GRAVITY = 4
 
 local leftW 
 local rightW
@@ -72,6 +72,7 @@ local floor
 
 local ball1
 local ball2
+local ball3
 local theBall
 
 local questionsAnswered = 0
@@ -84,6 +85,9 @@ local boingSoundChannel
 
 local loseSound = audio.loadSound("Sounds/YouLose.mp3")
 local loseSoundChannel
+
+local winSound = audio.loadSound("Sounds/Cheer.mp3")
+local winSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -171,12 +175,17 @@ end
 local function MakeSoccerBallsVisible()
     ball1.isVisible = true
     ball2.isVisible = true
+    ball3.isVisible = true
 end
 
 local function MakeHeartsVisible()
     heart1.isVisible = true
     heart2.isVisible = true
     heart3.isVisible = true
+end
+
+local function YouWinTransition()
+    composer.gotoScene( "you_win" )
 end
 
 local function YouLoseTransition()
@@ -238,7 +247,8 @@ local function onCollision( self, event )
         end
 
         if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball2") then
+            (event.target.myName == "ball2") or
+            (event.target.myName == "ball3") then
 
             -- get the ball that the user hit
             theBall = event.target
@@ -257,9 +267,11 @@ local function onCollision( self, event )
         end
 
         if (event.target.myName == "door") then
-            --check to see if the user has answered 5 questions
+            --check to see if the user has answered 3 questions
             if (questionsAnswered == 3) then
                 -- after getting 3 questions right, go to the you win screen
+                 timer.performWithDelay(200, YouWinTransition)
+                winSoundChannel = audio.play(winSound)
             end
         end        
 
@@ -281,6 +293,8 @@ local function AddCollisionListeners()
     ball1:addEventListener( "collision" )
     ball2.collision = onCollision
     ball2:addEventListener( "collision" )
+    ball3.collision = onCollision
+    ball3:addEventListener( "collision" )
 
     door.collision = onCollision
     door:addEventListener( "collision" )
@@ -293,6 +307,7 @@ local function RemoveCollisionListeners()
 
     ball1:removeEventListener( "collision" )
     ball2:removeEventListener( "collision" )
+    ball3:removeEventListener( "collision" )
 
     door:removeEventListener( "collision")
 
@@ -320,8 +335,9 @@ local function AddPhysicsBodies()
 
     physics.addBody(ball1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(ball2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(ball3, "static",  {density=0, friction=0, bounce=0} )
 
-    physics.addBody(door, "static", {density=1, friction=0.3, bounce=0.2})
+    --physics.addBody(door, "static", {density=1, friction=0.3, bounce=0.2})
 
 end
 
@@ -554,8 +570,14 @@ function scene:create( event )
     ball2.y = 170
     ball2.myName = "ball2"
 
+    --ball3
+    ball3 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
+    ball3.x = 950
+    ball3.y = 135
+    ball3.myName = "ball3"
+
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball2 )
+    sceneGroup:insert( ball3 )
 
 end --function scene:create( event )
 
