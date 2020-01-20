@@ -272,8 +272,6 @@ local function AddTextObjectListeners()
     wrongAnswer2TextObject:addEventListener("touch", TouchListenerWrongAnswer4)
 end
 
-end
-
 -- Function that removes the touch listeners from each of the answer objects
 local function RemoveTextObjectListeners()
 
